@@ -37,5 +37,18 @@ RSpec.describe "Book Index Page", type: :feature do
         expect(page).to have_content("Author: #{@book_3.authors.name}")
       end
     end
+
+    describe "I see each author's name is a link" do
+      it "When I click the link, I am taken to an Author Show Page" do
+        visit "/books"
+
+        within "#book-#{@book_1.id}" do
+          expect(page).to have_link(@author_1.name)
+          click_link(@author_1.name)
+        end
+        
+        expect(current_path).to eq("/authors/#{@author_1.id}")
+      end
+    end
   end
 end
